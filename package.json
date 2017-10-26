@@ -4,7 +4,7 @@
   "version": "13.0.1",
   "homepage": "https://github.com/hapijs/joi",
   "repository": "git://github.com/hapijs/joi",
-  "main": "dist/joi.js",
+  "main": "dist/es5/joi.js",
   "keywords": [
     "hapi",
     "schema",
@@ -19,6 +19,8 @@
     "topo": "3.x.x"
   },
   "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
     "browserify": "^14.5.0",
     "hapitoc": "1.x.x",
     "lab": "14.x.x"
@@ -29,7 +31,9 @@
     "test-cov-html": "lab -r html -o coverage.html -a code",
     "toc": "hapitoc",
     "version": "npm run toc && git add API.md README.md",
-    "build": "NODE_ENV=production browserify lib/index.js --standalone joi > dist/joi.js"
+    "browserify": "NODE_ENV=production browserify lib/index.js --standalone joi > dist/es5/joi.js",
+    "babel": "babel dist/es6/joi.js --compact=false --out-file dist/es5/joi.js",
+    "build": "npm run browserify && cp dist/es5/joi.js dist/es6/joi.js && npm run babel"
   },
   "license": "BSD-3-Clause"
 }
